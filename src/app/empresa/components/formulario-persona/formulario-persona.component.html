@@ -1,0 +1,114 @@
+<section class="mb-5">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPerson">Agregar Persona</button>
+
+    <!-- Modal agregar Persona al array-->
+    <div class="modal fade" id="addPerson" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agrega una persona</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="form" (ngSubmit)="save($event)">
+                        <section class="container mt-5">
+
+                            <div class="field">
+                                <label for="nombrePersona">Nombre</label>
+                                <div class="control has-icons-right">
+                                    <input class="input" type="text" [(ngModel)]="newPersona.nombre" formControlName="nombre" [class.is-danger]="nombreFieldIsInvalid" [class.is-success]="nombreFieldIsValid">
+                                    <span *ngIf="nombreFieldIsInvalid else elsenameValid" class="icon is-small is-right">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                    <ng-template #elsenameValid>
+                                        <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <!-- validaciones  -->
+                            <div *ngIf="nombreFieldIsInvalid ">
+                                <p class="help is-danger " *ngIf="nombreField.hasError( 'required') ">
+                                    * Debes ingresar el nombre de la persona.
+                                </p>
+                                <p class="help is-danger " *ngIf="nombreField.hasError( 'minlength') ">
+                                    * Mínimo 5 caracteres.
+                                </p>
+                                <p class="help is-danger " *ngIf="nombreField.hasError( 'maxlength') ">
+                                    * Máximo 30 caracteres.
+                                </p>
+                            </div>
+                            <!-- validaciones  -->
+
+
+                            <div class="field">
+                                <label>Edad</label>
+                                <div class="control has-icons-right">
+                                    <input [(ngModel)]="newPersona.edad" type="number" min="1" class="input" formControlName="edad" [class.is-danger]="edadFieldIsInvalid" [class.is-success]="edadFieldIsValid">
+                                    <span *ngIf="edadFieldIsInvalid else elseEdadValid" class="icon is-small is-right">
+                              <i class="fas fa-times"></i>
+                          </span>
+                                    <ng-template #elseEdadValid>
+                                        <span class="icon is-small is-right">
+                                  <i class="fas fa-check"></i>
+                              </span>
+                                    </ng-template>
+                                </div>
+                                <!-- validaciones  -->
+                                <div *ngIf="edadFieldIsInvalid ">
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'pattern') ">
+                                        * La edad debe ser congruente.
+                                    </p>
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'required') ">
+                                        * Debes ingresar la edad de la persona.
+                                    </p>
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'min') ">
+                                        * Mínimo 1 año de edad.
+                                    </p>
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'max') ">
+                                        * Maximo 100 año de edad.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- validaciones  -->
+
+
+                            <div class="field">
+                                <label for="Frase">Frase</label>
+                                <div class="control has-icons-right">
+                                    <textarea class="textarea" [(ngModel)]="newPersona.frase" cols="30" rows="5" formControlName="frase" [class.is-danger]="fraseFieldIsInvalid" [class.is-success]="fraseFieldIsValid"></textarea>
+                                    <span *ngIf="fraseFieldIsInvalid else elseFraseValid" class="icon is-small is-right">
+                            <i class="fas fa-times"></i>
+                        </span>
+                                    <ng-template #elseFraseValid>
+                                        <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <!-- validaciones  -->
+                            <div *ngIf="fraseFieldIsInvalid">
+                                <p class="help is-danger" *ngIf="fraseField.hasError('required')">
+                                    * Debes ingresar una frase.
+                                </p>
+                                <p class="help is-danger" *ngIf="fraseField.hasError('maxlength')">
+                                    * Máximo 80 caracteres.
+                                </p>
+                            </div>
+                            <!-- validaciones  -->
+                        </section>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="addNewPersonaHijo(newPersona)">Agregar persona</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal agregar Persona al array-->
+</section>

@@ -1,0 +1,27 @@
+<section class="container">
+    <app-formulario-persona (nuevaPersona)="addNewPersonaPadre($event)"></app-formulario-persona>
+    <div *ngIf="personas.length === 0">
+        <h2 class="text-center">Deberias agregar alguna persona</h2>
+    </div>
+    <div *ngIf="personas.length > 0">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let persona of personas; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.edad }}</td>
+                    <td><button class="btn btn-danger" (click)="deletPersona(persona)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <app-tarjeta-presenacion [dataPersonas]="personas" (updateLocal)="updateArrayLocal($event)"></app-tarjeta-presenacion>
+    </div>
+</section>

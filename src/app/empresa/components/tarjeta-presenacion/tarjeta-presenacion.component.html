@@ -1,0 +1,142 @@
+<section>
+    <div class="container" *ngIf="dataPersonas.length > 0">
+        <h1 class="text-center">Tarjetas de las personas</h1>
+        <div class="row">
+            <div class="col-md-4 mt-4" *ngFor="let dataPersona of dataPersonas; index as i">
+                <div class="card">
+                    <div class="card-header">Persona {{i + 1}}</div>
+                    <div class="card-body text-center">
+                        <h4 *ngIf="dataPersona.direccion" class="card-title"> ID: {{ dataPersona.direccion.id }}</h4>
+                        <div class="card-text">
+                            <p><strong>Nombre:</strong> {{ dataPersona.nombre }}</p>
+                            <p><strong>Edad:</strong> {{ dataPersona.edad }}</p>
+                            <p><strong>Frase:</strong> {{ dataPersona.frase }}</p>
+                            <div *ngIf="dataPersona.direccion">
+                                <h4>Dirección:</h4>
+                                <p><strong>Calle:</strong> {{ dataPersona.direccion.calle }}</p>
+                                <p><strong>Colonia:</strong> {{ dataPersona.direccion.colonia }}</p>
+                                <p><strong>País:</strong> {{ dataPersona.direccion.pais }}</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#editPerson" (click)="renderPerson(dataPersona)">Editar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Editar Persona del array-->
+    <div class="modal fade" id="editPerson" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editando persona</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="form" (ngSubmit)="save($event)">
+                        <section class="container mt-5">
+
+                            <div class="field">
+                                <label for="nombrePersona">Nombre</label>
+                                <div class="control has-icons-right">
+                                    <input class="input" type="text" [(ngModel)]="editPersona.nombre" formControlName="nombre" [class.is-danger]="nombreFieldIsInvalid" [class.is-success]="nombreFieldIsValid">
+                                    <span *ngIf="nombreFieldIsInvalid else elsenameValid" class="icon is-small is-right">
+                        <i class="fas fa-times"></i>
+                    </span>
+                                    <ng-template #elsenameValid>
+                                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <!-- validaciones  -->
+                            <div *ngIf="nombreFieldIsInvalid ">
+                                <p class="help is-danger " *ngIf="nombreField.hasError( 'required') ">
+                                    * Debes ingresar el nombre de la persona.
+                                </p>
+                                <p class="help is-danger " *ngIf="nombreField.hasError( 'minlength') ">
+                                    * Mínimo 5 caracteres.
+                                </p>
+                                <p class="help is-danger " *ngIf="nombreField.hasError( 'maxlength') ">
+                                    * Máximo 30 caracteres.
+                                </p>
+                            </div>
+                            <!-- validaciones  -->
+
+
+                            <div class="field">
+                                <label>Edad</label>
+                                <div class="control has-icons-right">
+                                    <input [(ngModel)]="editPersona.edad" type="number" min="1" class="input" formControlName="edad" [class.is-danger]="edadFieldIsInvalid" [class.is-success]="edadFieldIsValid">
+                                    <span *ngIf="edadFieldIsInvalid else elseEdadValid" class="icon is-small is-right">
+                          <i class="fas fa-times"></i>
+                      </span>
+                                    <ng-template #elseEdadValid>
+                                        <span class="icon is-small is-right">
+                              <i class="fas fa-check"></i>
+                          </span>
+                                    </ng-template>
+                                </div>
+                                <!-- validaciones  -->
+                                <div *ngIf="edadFieldIsInvalid ">
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'pattern') ">
+                                        * La edad debe ser congruente.
+                                    </p>
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'required') ">
+                                        * Debes ingresar la edad de la persona.
+                                    </p>
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'min') ">
+                                        * Mínimo 1 año de edad.
+                                    </p>
+                                    <p class="help is-danger " *ngIf="edadField.hasError( 'max') ">
+                                        * Maximo 100 año de edad.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- validaciones  -->
+
+
+                            <div class="field">
+                                <label for="Frase">Frase</label>
+                                <div class="control has-icons-right">
+                                    <textarea class="textarea" [(ngModel)]="editPersona.frase" cols="30" rows="5" formControlName="frase" [class.is-danger]="fraseFieldIsInvalid" [class.is-success]="fraseFieldIsValid"></textarea>
+                                    <span *ngIf="fraseFieldIsInvalid else elseFraseValid" class="icon is-small is-right">
+                        <i class="fas fa-times"></i>
+                    </span>
+                                    <ng-template #elseFraseValid>
+                                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <!-- validaciones  -->
+                            <div *ngIf="fraseFieldIsInvalid">
+                                <p class="help is-danger" *ngIf="fraseField.hasError('required')">
+                                    * Debes ingresar una frase.
+                                </p>
+                                <p class="help is-danger" *ngIf="fraseField.hasError('maxlength')">
+                                    * Máximo 80 caracteres.
+                                </p>
+                            </div>
+                            <!-- validaciones  -->
+                        </section>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editPerson(editPersona, auxPersona)">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal Editar Persona del array-->
+</section>

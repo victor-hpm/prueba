@@ -1,0 +1,8 @@
+.navbar {
+    background: black;
+    color: white;
+}
+
+.active {
+    border-bottom: solid 4px white;
+}

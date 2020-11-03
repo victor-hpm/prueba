@@ -1,0 +1,24 @@
+<section class="container" *ngIf="posts.length > 0">
+    <app-comments-table></app-comments-table>
+    <h2 class="text-center">--Posts--</h2>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">User_Id</th>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Body</th>
+                <th scope="col">Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of posts; index as i">
+                <th scope="row">{{posts[i].userId}}</th>
+                <td>{{posts[i].id}}</td>
+                <td>{{posts[i].title}}</td>
+                <td>{{posts[i].body}}</td>
+                <td><button class="btn btn-info" (click)="enviarPeticion(posts[i].id)">Comments</button></td>
+            </tr>
+        </tbody>
+    </table>
+</section>

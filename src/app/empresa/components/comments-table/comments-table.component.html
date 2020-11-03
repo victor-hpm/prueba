@@ -1,0 +1,21 @@
+<section class="container" *ngIf="comments.length > 0">
+    <h2 class="text-center">--Comments--</h2>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Post_Id</th>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">Body</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let comment of comments; index as i">
+                <th scope="row">{{comments[i].postId}}</th>
+                <td>{{comments[i].id}}</td>
+                <td>{{comments[i].email}}</td>
+                <td>{{comments[i].body}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
